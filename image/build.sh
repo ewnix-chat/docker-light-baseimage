@@ -16,7 +16,7 @@ cp /container/file/dpkg_nolocales /etc/dpkg/dpkg.cfg.d/01_nolocales
 # General config
 export LC_ALL=C
 export DEBIAN_FRONTEND=noninteractive
-MINIMAL_APT_GET_INSTALL='apt-get install -y --no-install-recommends'
+MINIMAL_APT_GET_INSTALL='apt install -y --no-install-recommends'
 
 ## Prevent initramfs updates from trying to run grub and lilo.
 ## https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/
@@ -24,7 +24,7 @@ MINIMAL_APT_GET_INSTALL='apt-get install -y --no-install-recommends'
 export INITRD=no
 printf no > /container/environment/INITRD
 
-apt-get update
+apt update
 
 ## Fix some issues with APT packages.
 ## See https://github.com/dotcloud/docker/issues/1024
@@ -42,7 +42,7 @@ ln -sf /bin/true /usr/bin/ischroot
 $MINIMAL_APT_GET_INSTALL apt-utils apt-transport-https ca-certificates locales procps dirmngr gnupg iproute2 python3-minimal python3-yaml
 
 ## Upgrade all packages.
-apt-get dist-upgrade -y --no-install-recommends -o Dpkg::Options::="--force-confold"
+apt dist-upgrade -y --no-install-recommends -o Dpkg::Options::="--force-confold"
 
 # fix locale
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -53,7 +53,7 @@ printf en_US.UTF-8 > /container/environment/LANG
 printf en_US.UTF-8 > /container/environment/LANGUAGE
 printf en_US.UTF-8 > /container/environment/LC_CTYPE
 
-apt-get clean
+apt clean
 rm -rf /tmp/* /var/tmp/*
 rm -rf /var/lib/apt/lists/*
 
